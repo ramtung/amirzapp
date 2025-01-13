@@ -1,0 +1,1 @@
+For the first phase, a target word is hard-coded in the program, and the user must guess that word, given the letters of the word, scrambled manually.
