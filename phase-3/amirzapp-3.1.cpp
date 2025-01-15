@@ -1,6 +1,8 @@
+// use linked lists to store other words
+
 #include <iostream>
 #include <string>
-#include <vector>
+#include <list>
 #include <cstdlib>
 #include <ctime>
 using namespace std;
@@ -21,11 +23,13 @@ void print_scrambled(string s) {
     cout << endl;
 }
 
-bool find_in_others(const vector<string>& others, string s) {
-    for (int i = 0; i < others.size(); i++) {
-        if (others[i] == s) {
+bool find_in_others(list<string> others, string s) {
+    list<string>::iterator it = others.begin();
+    while (it != others.end()) {
+        if (*it == s) {
             return true;
         }
+        ++it;
     }
     return false;
 }
@@ -41,7 +45,7 @@ int main() {
     srand(time(0));
 
     const string target = "prince";
-    const vector<string> other_words = {"i", "ice", "in", "nice", "pi", "epic", "pie", "pin", "nip", "pine", "pen", "per", "price", "pier", "ripe", "pincer", "ripen", "rice", "eric", "nicer", "rein"};
+    const list<string> other_words = {"i", "ice", "in", "nice", "pi", "epic", "pie", "pin", "nip", "pine", "pen", "per", "price", "pier", "ripe", "pincer", "ripen", "rice", "eric", "nicer", "rein"};
 
     cout << "The letters are: ";
     print_scrambled(target);
