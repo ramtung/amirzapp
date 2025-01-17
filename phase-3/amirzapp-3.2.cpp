@@ -24,6 +24,17 @@ void print_scrambled(string s) {
     cout << endl;
 }
 
+bool contains_extra_characters(string s, string target) {
+    for (int i = 0; i < s.length(); i++) {
+        size_t pos = target.find(s[i]);
+        if (pos == string::npos) {
+            return true;
+        }
+        target.erase(pos, 1);
+    }
+    return false;
+}
+
 string tolower(string s) {
     for (int i = 0; i < s.length(); i++) {
         s[i] = tolower(s[i]);
@@ -50,6 +61,8 @@ int main() {
             return 0;
         } else if (find(other_words.begin(), other_words.end(), input) != other_words.end()) {
             cout << "Nice, but it's not what I have in mind!" << endl;
+        } else if (contains_extra_characters(input, target)) {
+            cout << "You used some extra characters!" << endl;
         } else {
             cout << "Is it even a word?!" << endl;
         }

@@ -20,31 +20,35 @@ set<string> all_subsets(string s) {
     return subsets;
 }
 
-void print_all_permutations(string s, int i = 0) {
+void print_all_permutations(ostream& out, string s, int i = 0) {
     if (i == s.length()) {
         if (words.count(s) != 0)
-            cout << s << endl;
+            out << s << endl;
         return;
     }
     for (int j = i; j < s.length(); j++) {
         swap(s[i], s[j]);
-        print_all_permutations(s, i + 1);
+        print_all_permutations(out, s, i + 1);
         swap(s[i], s[j]);
     }
 }
 
 int main() {
-    ifstream file("words_alpha.txt");
+    ifstream file("mit-100000.txt");
     string word;
     while (file >> word) {
         words.insert(word);
     }
 
-    set<string> subsets = all_subsets("prince");
+    cout << "Enter a word: ";
+    cin >> word;
+
+    ofstream out(word + "-words.txt");
+    set<string> subsets = all_subsets(word);
     for (string subset : subsets) {
-        print_all_permutations(subset);
-        // cout << subset << endl;
+        if (subset.length() < 3)
+            continue;
+        print_all_permutations(out, subset);
     }
 
-    print_all_permutations("prince");
 }

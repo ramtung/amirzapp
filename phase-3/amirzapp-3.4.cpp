@@ -1,6 +1,9 @@
+// use set::count to check if the input is in the set of other_words
+
 #include <iostream>
 #include <string>
-#include <vector>
+#include <set>
+#include <algorithm>
 #include <cstdlib>
 #include <ctime>
 using namespace std;
@@ -19,15 +22,6 @@ void print_scrambled(string s) {
         cout << scrambled[i] << ' ';
     }
     cout << endl;
-}
-
-bool find_in_others(vector<string> others, string s) {
-    for (int i = 0; i < others.size(); i++) {
-        if (others[i] == s) {
-            return true;
-        }
-    }
-    return false;
 }
 
 bool contains_extra_characters(string s, string target) {
@@ -52,7 +46,7 @@ int main() {
     srand(time(0));
 
     const string target = "prince";
-    const vector<string> other_words = {"i", "ice", "in", "nice", "pi", "epic", "pie", "pin", "nip", "pine", "pen", "per", "price", "pier", "ripe", "pincer", "ripen", "rice", "eric", "nicer", "rein"};
+    const set<string> other_words = {"i", "ice", "in", "nice", "pi", "epic", "pie", "pin", "nip", "pine", "pen", "per", "price", "pier", "ripe", "pincer", "ripen", "rice", "eric", "nicer", "rein"};
 
     cout << "The letters are: ";
     print_scrambled(target);
@@ -65,7 +59,7 @@ int main() {
         if (input == target) {
             cout << "Congratulations! You found the target word!" << endl;
             return 0;
-        } else if (find_in_others(other_words, input)) {
+        } else if (other_words.count(input) != 0) {
             cout << "Nice, but it's not what I have in mind!" << endl;
         } else if (contains_extra_characters(input, target)) {
             cout << "You used some extra characters!" << endl;
