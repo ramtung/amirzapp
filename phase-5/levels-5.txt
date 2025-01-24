@@ -1,0 +1,6 @@
+format: level-letters target-words '-' bonus-words
+prince ice pin pen rice nice prince - epic pie nip pine per price pier rip ripe pincer ripen eric nicer rein
+orange gear ear are one age gone near anger orange - gen ago geo neo organ gore ron nor reno era arg rage ran earn range 
+regard red are ear age read rear grade regard - aged arg dare dear drag edgar era gear grad rage rare reg
+outline ten let toe one line lion note until outline - lie nil neil len ion leo oil lone leon neo into lot ton not tone lou out unto tie tin lit tile lite intel net unit nut tune
+mermaid are air aid dear ride read idea made media dream mermaid - aim aimed arm armed dam dare die dim ear emma era mad med mid mime raid ram red rid rim

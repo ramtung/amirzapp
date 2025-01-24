@@ -11,6 +11,7 @@ pen
 per
 price
 pier
+rip
 ripe
 prince
 pincer
