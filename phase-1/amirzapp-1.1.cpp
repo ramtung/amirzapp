@@ -12,7 +12,7 @@ string scramble(string s) {
     return s;
 }
 
-void print_scrambled(string s) {
+void printScrambled(string s) {
     string scrambled = scramble(s);
     for (int i = 0; i < scrambled.length(); i++) {
         cout << scrambled[i] << ' ';
@@ -25,7 +25,7 @@ int main() {
 
     const string target = "prince";
     cout << "The letters are: ";
-    print_scrambled(target);
+    printScrambled(target);
 
     cout << "Please enter the word. Press Ctrl-D to exit." << endl;
 

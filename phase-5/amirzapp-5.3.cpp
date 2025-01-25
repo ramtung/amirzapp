@@ -9,16 +9,16 @@
 #include <ctime>
 using namespace std;
 
-struct target_word {
+struct TargetWord {
     string word;
     bool found;
 };
 
-struct level {
-    string target_letters;
-    list<target_word> target_words;
-    set<string> bonus_words_found;
-    set<string> bonus_words_remaining;
+struct Level {
+    string targetLetters;
+    list<TargetWord> targetWords;
+    set<string> bonusWordsFound;
+    set<string> bonusWordsRemaining;
 };
 
 string scramble(string s) {
@@ -29,21 +29,21 @@ string scramble(string s) {
     return s;
 }
 
-void print_letters(string target_letters) {
-    for (int i = 0; i < target_letters.length(); i++) {
-        cout << target_letters[i] << ' ';
+void printLetters(string targetLetters) {
+    for (int i = 0; i < targetLetters.length(); i++) {
+        cout << targetLetters[i] << ' ';
     }
     cout << endl;
 }
 
-string tolower(string s) {
+string toLower(string s) {
     for (int i = 0; i < s.length(); i++) {
         s[i] = tolower(s[i]);
     }
     return s;
 }
 
-bool contains_extra_characters(string s, string target) {
+bool containsExtraCharacters(string s, string target) {
     for (int i = 0; i < s.length(); i++) {
         size_t pos = target.find(s[i]);
         if (pos == string::npos) {
@@ -54,120 +54,119 @@ bool contains_extra_characters(string s, string target) {
     return false;
 }
 
-void print_level(level lvl) {
-    for (target_word tword : lvl.target_words) {
+void printLevel(Level lvl) {
+    for (TargetWord tword : lvl.targetWords) {
         if (tword.found)
             cout << tword.word << endl;
         else
             cout << string(tword.word.length(), '-') << endl;
     }
     cout << "The letters are: ";
-    print_letters(lvl.target_letters);
+    printLetters(lvl.targetLetters);
 }
 
-int level_score(level lvl) {
+int levelScore(Level lvl) {
     int sum = 0;
-    for (target_word tword : lvl.target_words) {
+    for (TargetWord tword : lvl.targetWords) {
         if (tword.found)
             sum += tword.word.length();
     }
-    for (string bonus_word : lvl.bonus_words_found) {
-        sum += bonus_word.length();
+    for (string bonusWord : lvl.bonusWordsFound) {
+        sum += bonusWord.length();
     }
     return sum;
 }
 
-bool play_level(level lvl, int& score) {
+bool playLevel(Level lvl, int& score) {
     string input;
-    print_level(lvl);
+    printLevel(lvl);
     cout << "> ";
     while (cin >> input) {
-        input = tolower(input);
+        input = toLower(input);
         if (input == "scramble!") {
-            lvl.target_letters = scramble(lvl.target_letters);
-            print_level(lvl);
+            lvl.targetLetters = scramble(lvl.targetLetters);
+            printLevel(lvl);
             cout << "> ";
             continue;
         }
-        auto it = find_if(lvl.target_words.begin(), lvl.target_words.end(), 
-            [input](target_word tword) {
+        auto it = find_if(lvl.targetWords.begin(), lvl.targetWords.end(), 
+            [input](TargetWord tword) {
                 return tword.word == input;
             });
-        if (it != lvl.target_words.end()) {
+        if (it != lvl.targetWords.end()) {
             it->found = true;
             cout << "Great! You found a target word!" << endl;
-            print_level(lvl);
-            if (all_of(lvl.target_words.begin(), lvl.target_words.end(), 
-                [](target_word tword) {
+            printLevel(lvl);
+            if (all_of(lvl.targetWords.begin(), lvl.targetWords.end(), 
+                [](TargetWord tword) {
                     return tword.found;
                 })) {
                 cout << "Congratulations! You found all target words!" << endl;
-                score += level_score(lvl);
+                score += levelScore(lvl);
                 cout << "Your score is now " << score << endl;
                 return true;
             }
-        } else if (lvl.bonus_words_found.count(input) != 0) {
+        } else if (lvl.bonusWordsFound.count(input) != 0) {
             cout << "You already found this bonus word!" << endl;
-        } else if (lvl.bonus_words_remaining.count(input) != 0) {
+        } else if (lvl.bonusWordsRemaining.count(input) != 0) {
             cout << "Nice! You found a bonus word!" << endl;
-            lvl.bonus_words_remaining.erase(input);
-            lvl.bonus_words_found.insert(input);
-            cout << "Bonus words found: " << lvl.bonus_words_found.size() << endl;
-        } else if (contains_extra_characters(input, lvl.target_letters)) {
+            lvl.bonusWordsRemaining.erase(input);
+            lvl.bonusWordsFound.insert(input);
+            cout << "Bonus words found: " << lvl.bonusWordsFound.size() << endl;
+        } else if (containsExtraCharacters(input, lvl.targetLetters)) {
             cout << "You used some extra characters!" << endl;
         } else {
             cout << "Hmmm, sorry!" << endl;
         }
-        print_level(lvl);
+        printLevel(lvl);
         cout << "> ";
     }
     cout << "Giving up so soon? Why?!" << endl;
     return false;
 }
 
-list<level> read_levels(string filename) {
-    list<level> levels;
-    ifstream level_file(filename);
-    string level_str;
-    getline(level_file, level_str); // skip the header
+list<Level> readLevels(string filename) {
+    list<Level> levels;
+    ifstream levelFile(filename);
+    string levelStr;
+    getline(levelFile, levelStr); // skip the header
 
-    while (getline(level_file, level_str)) {
-        level lvl;
+    while (getline(levelFile, levelStr)) {
+        Level lvl;
         string word;
-        istringstream level_stream(level_str);       
-        level_stream >> word;
-        lvl.target_letters = scramble(word);
-        while (level_stream >> word && (word != "-")) {
-            lvl.target_words.push_back({word, false});
+        istringstream levelStream(levelStr);       
+        levelStream >> word;
+        lvl.targetLetters = scramble(word);
+        while (levelStream >> word && (word != "-")) {
+            lvl.targetWords.push_back({word, false});
         }
-        while (level_stream >> word)
-            lvl.bonus_words_remaining.insert(word);
-        lvl.target_words.sort(
-            [](target_word a, target_word b) {
+        while (levelStream >> word)
+            lvl.bonusWordsRemaining.insert(word);
+        lvl.targetWords.sort(
+            [](TargetWord a, TargetWord b) {
                 return (a.word.length() < b.word.length()) || 
                     ((a.word.length() == b.word.length()) && (a.word < b.word));
             });
         levels.push_back(lvl);
     }
-    level_file.close();
     return levels;
 }
 
 int main() {
     srand(time(0));
 
-    const list<level> levels = read_levels("levels-5.txt");
+    const list<Level> levels = readLevels("levels-5.txt");
 
     cout << "Find all the target words in the levels." << endl 
          << "Gain extra points by finding bonus words." << endl
          << "Enter scramble! to re-scramble the words." << endl
          << "Press Ctrl-D to exit." << endl;
-    int level_no = 0;
+    int levelNo = 0;
     int score = 0;
-    for (level lvl : levels) {
-        level_no++;
-        cout << endl << "Level " << level_no << endl;
-        if (!play_level(lvl, score))
+    for (Level lvl : levels) {
+        levelNo++;
+        cout << endl << "Level " << levelNo << endl;
+        if (!playLevel(lvl, score))
             return 0;
     }
     cout << endl << "Congratulations! You solved all levels!" << endl;

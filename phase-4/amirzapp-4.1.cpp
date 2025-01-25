@@ -7,9 +7,9 @@
 #include <ctime>
 using namespace std;
 
-struct level {
+struct Level {
     string target;
-    set<string> other_words;
+    set<string> otherWords;
 };
 
 string scramble(string s) {
@@ -20,7 +20,7 @@ string scramble(string s) {
     return s;
 }
 
-void print_scrambled(string s) {
+void printScrambled(string s) {
     string scrambled = scramble(s);
     for (int i = 0; i < scrambled.length(); i++) {
         cout << scrambled[i] << ' ';
@@ -28,14 +28,14 @@ void print_scrambled(string s) {
     cout << endl;
 }
 
-string tolower(string s) {
+string toLower(string s) {
     for (int i = 0; i < s.length(); i++) {
         s[i] = tolower(s[i]);
     }
     return s;
 }
 
-bool contains_extra_characters(string s, string target) {
+bool containsExtraCharacters(string s, string target) {
     for (int i = 0; i < s.length(); i++) {
         size_t pos = target.find(s[i]);
         if (pos == string::npos) {
@@ -46,21 +46,21 @@ bool contains_extra_characters(string s, string target) {
     return false;
 }
 
-bool play_level(level lvl) {
+bool playLevel(Level lvl) {
     cout << "The letters are: ";
-    print_scrambled(lvl.target);
+    printScrambled(lvl.target);
 
     cout << "Please guess the target word. Press Ctrl-D to exit." << endl;
 
     string input;
     while (cin >> input) {
-        input = tolower(input);
+        input = toLower(input);
         if (input == lvl.target) {
             cout << "Congratulations! You found the target word!" << endl;
             return true;
-        } else if (lvl.other_words.count(input) != 0) {
+        } else if (lvl.otherWords.count(input) != 0) {
             cout << "Nice, but it's not what I have in mind!" << endl;
-        } else if (contains_extra_characters(input, lvl.target)) {
+        } else if (containsExtraCharacters(input, lvl.target)) {
             cout << "You used some extra characters!" << endl;
         } else {
             cout << "Is it even a word?!" << endl;
@@ -73,7 +73,7 @@ bool play_level(level lvl) {
 int main() {
     srand(time(0));
 
-    const list<level> levels = {
+    const list<Level> levels = {
         { "prince", {"ice", "nice", "epic", "pie", "pin", "nip", "pine", "pen", "per", "price", "pier", "ripe", "pincer", "ripen", "rice", "eric", "nicer", "rein"} },
         { "orange", {"age", "gen", "ago", "geo", "one", "neo", "gone", "organ", "gore", "ron", "nor", "reno", "are", "ear", "era", "arg", "rage", "gear", "ran", "near", "earn", "range", "anger"} },
         { "regard", {"age", "aged", "are", "arg", "dare", "dear", "der", "der", "drag", "ear", "edgar", "era", "gear", "grad", "grade", "rage", "rare", "read", "rear", "red", "reg"} },
@@ -81,11 +81,11 @@ int main() {
         { "mermaid", {"aid", "aim", "aimed", "air", "are", "arm", "armed", "dam", "dare", "dear", "die", "dim", "dream", "ear", "emma", "era", "idea", "mad", "made", "mar", "mardi", "med", "media", "mid", "mime", "raid", "ram", "read", "red", "rid", "ride", "rim"} }
     };
 
-    int level_no = 0;
-    for (level lvl : levels) {
-        level_no++;
-        cout << endl << "Level " << level_no << endl;
-        if (!play_level(lvl))
+    int levelNo = 0;
+    for (Level lvl : levels) {
+        levelNo++;
+        cout << endl << "Level " << levelNo << endl;
+        if (!playLevel(lvl))
             return 0;
     }
     cout << endl << "Congratulations! You solved all levels!" << endl;
