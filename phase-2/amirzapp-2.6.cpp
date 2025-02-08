@@ -1,5 +1,7 @@
 #include <iostream>
 #include <string>
+#include <set>
+#include <algorithm>
 #include <cstdlib>
 #include <ctime>
 using namespace std;
@@ -42,6 +44,8 @@ int main() {
   srand(time(0));
 
   const string target = "prince";
+  const set<string> otherWords = {"i", "ice", "in", "nice", "pi", "epic", "pie", "pin", "nip", "pine", "pen", "per", "price", "pier", "ripe", "pincer", "ripen", "rice", "eric", "nicer", "rein"};
+
   cout << "The letters are: ";
   printScrambled(target);
 
@@ -54,11 +58,15 @@ int main() {
     if (input == target) {
       cout << "Congratulations! "
            << "You found the target word!" << endl;
-      break;
+       return 0;
+    } else if (otherWords.count(input) != 0) {
+      cout << "Nice, "
+           << "but it's not what I have in mind!" << endl;
     } else if (containsExtraCharacters(input, target)) {
       cout << "You used some extra characters!" << endl;
     } else {
       cout << "Sorry, please try again!" << endl;
     }
   }
+  cout << "Giving up so soon? Why?!" << endl;
 }

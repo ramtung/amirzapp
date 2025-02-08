@@ -1,13 +1,13 @@
-The user may guess other words that can be made with the given letters, but only one of them make him win. Use linked list and set to store other words.
+Amirzapp is now a multi-level game! After successfully solving a level, the user advances to the next level. 
 
-* [amirzapp-3.1.cpp](amirzapp-3.1.cpp) Using list
-* [amirzapp-3.2.cpp](amirzapp-3.2.cpp) Using STL find()
-* [amirzapp-3.3.cpp](amirzapp-3.3.cpp) Using set
-* [amirzapp-3.4.cpp](amirzapp-3.4.cpp) Using set::count
+In version 3.3, there are multiple target words per level. After findng all target words, the user advances to the next level and receives a score equal to the sum of the lengths of all target words and the bonus words found. The user may enter "scramble!" command to re-scramble the letters.
+
+* [amirzapp-3.1.cpp](amirzapp-3.1.cpp) Five levels are hard-coded in the program.
+* [amirzapp-3.2.cpp](amirzapp-3.2.cpp) The levels are read from a file.
+* amirzap-3.3 will be available later. 
 
 Learning Points:
-* Holding data in linked lists
-* Iterating over linked lists (range-based, iterators, but not indexing)
-* Using `find`: how the iterator interface promotes reusability
-* Holding data in `set`. 
-* Special method `count` (Each container may have its own special operations)
+* Organizing a program into functions
+* Defining data structures
+* Global variables downsides
+* file and string streams
