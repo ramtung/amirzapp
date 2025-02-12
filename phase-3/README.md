@@ -4,7 +4,8 @@ In version 3.3, there are multiple target words per level. After findng all targ
 
 * [amirzapp-3.1.cpp](amirzapp-3.1.cpp) Five levels are hard-coded in the program.
 * [amirzapp-3.2.cpp](amirzapp-3.2.cpp) The levels are read from a file.
-* amirzap-3.3 will be available later. 
+* [amirzapp-3.2-mess.cpp](amirzapp-3.2-mess.cpp) A messy version of `amirzapp-3.2.cpp` which is unstructured and not quite understandable.
+* [amirzapp-3.2-gpt.cpp](amirzapp-3.2-gpt.cpp) `amirzapp-3.2-mess.cpp` structured and cleaned-up by ChatGPT.
 
 Learning Points:
 * Organizing a program into functions
