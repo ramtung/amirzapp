@@ -99,11 +99,30 @@ vector<Level> readLevels(string filename) {
   return levels;
 }
 
+bool playLevel(Level& level) {
+  return true;
+}
+
+void playGame(vector<Level>& levels) {
+  int levelNo = 0;
+  for (Level& level : levels) {
+    levelNo++;
+    cout << "Level " << levelNo << endl;
+    if (!playLevel(level)) {
+      cout << "Giving up so sonn! Why?!" << endl;
+      return;
+    }
+  }
+  cout << "Congratulations! You passed all levels!" << endl;
+}
+
 int main() {
   srand(time(0));
-  const vector<Level> levels = readLevels("levels-5.txt");
+  vector<Level> levels = readLevels("levels-5.txt");
 
   cout << "Find all the target words in the levels." << endl 
        << "Gain extra points by finding bonus words." << endl
        << "Press Ctrl-D to exit." << endl;
+
+  playGame(levels);
 }
