@@ -99,12 +99,14 @@ vector<Level> readLevels(string filename) {
   return levels;
 }
 
-bool foundNewTargetWord(const Level& level, string input) {
+enum GuessResult {NOT_FOUND, FOUND_NEW, FOUND_ALREADY};
+
+GuessResult checkForTargetWord(const Level& level, string input) {
   for (auto gameWord : level.targetWords) {
-    if (!gameWord.found && (gameWord.word == input))
-      return true;
+    if (gameWord.word == input)
+      return gameWord.found ? FOUND_ALREADY : FOUND_NEW;
   }
-  return false;
+  return NOT_FOUND;
 }
 
 void markTargetWordAsFound(Level& level, string input) {
@@ -121,12 +123,15 @@ bool playLevel(Level& level) {
   string input;
   while (cin >> input) {
     input = toLower(input);
-    if (foundNewTargetWord(level, input)) {
+    GuessResult targetGuessResult = checkForTargetWord(level, input);
+    if (targetGuessResult == FOUND_NEW) {
       markTargetWordAsFound(level, input);
       cout << "Target word found!" << endl;
       printLevel(level);
       if (foundAllTargetWords(level))
         return true;
+    } else if (targetGuessResult == FOUND_ALREADY) {
+      cout << "Target word found already!" << endl;
     } else if (foundNewBonusWord(level, input)) {
       cout << "Bonus word found!" << endl;
     } else if (containsExtraCharacters(input, level.targetLetters)) {
