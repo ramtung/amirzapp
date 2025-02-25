@@ -52,7 +52,7 @@ bool containsExtraCharacters(string s, string target) {
   return false;
 }
 
-void printLevel(Level lvl) {
+void printLevel(const Level& lvl) {
   for (GameWord tword : lvl.targetWords) {
     if (tword.found)
       cout << tword.word << endl;
@@ -99,8 +99,43 @@ vector<Level> readLevels(string filename) {
   return levels;
 }
 
+bool foundNewTargetWord(const Level& level, string input) {
+  for (auto gameWord : level.targetWords) {
+    if (!gameWord.found && (gameWord.word == input))
+      return true;
+  }
+  return false;
+}
+
+void markTargetWordAsFound(Level& level, string input) {
+  for (auto gameWord : level.targetWords) {
+    if (gameWord.word == input) {
+      gameWord.found = true;
+      return;
+    }
+  }
+}
+
 bool playLevel(Level& level) {
-  return true;
+  printLevel(level);
+  string input;
+  while (cin >> input) {
+    input = toLower(input);
+    if (foundNewTargetWord(level, input)) {
+      markTargetWordAsFound(level, input);
+      cout << "Target word found!" << endl;
+      printLevel(level);
+      if (foundAllTargetWords(level))
+        return true;
+    } else if (foundNewBonusWord(level, input)) {
+      cout << "Bonus word found!" << endl;
+    } else if (containsExtraCharacters(input, level.targetLetters)) {
+      cout << "You used extra characters!" << endl;
+    } else {
+      cout << "Sorry! Try again!" << endl;
+    }
+  }
+  return false;
 }
 
 void playGame(vector<Level>& levels) {
